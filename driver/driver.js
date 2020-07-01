@@ -7,12 +7,15 @@ Client.connect(3000, 'localhost', () => {
   console.log('connected to server');
 });
 
-Client.on('data', (buffer) => {
+
+Client.on('data', checkEvent);
+
+function checkEvent(buffer) {
   let data = JSON.parse(buffer.toString());
   if(data.event === 'package-ready') {
     handlePickup(data);
   }
-})
+}
 
 
 function handlePickup(data) {

@@ -14,6 +14,8 @@ server.on('connection', (socket) => {
   socketPool[id] = socket;
   console.log('Connection established at ' + id);
   socket.on('data', handleData);
+  socket.on('error', (error) => console.log(error));
+  socket.on('end', () => { delete socketPool[id] });
 })
 
 
@@ -24,9 +26,7 @@ server.on('error', (error => {
 
 
 function handleData(buffer) {
-  console.log('running handle data');
   let data = JSON.parse(buffer.toString());
-  console.log(data);
   if (data.event && data.payload) {
     logger(data);
     for (let socket in socketPool) {

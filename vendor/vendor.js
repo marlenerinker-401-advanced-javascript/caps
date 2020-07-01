@@ -10,13 +10,14 @@ Client.connect(3000, 'localhost', () => {
   console.log('connected to server');
 });
 
-Client.on('data', (buffer) => {
+Client.on('data', checkEvent);
+
+function checkEvent(buffer) {
   let data = JSON.parse(buffer.toString());
   if(data.event === 'package-delivered') {
     console.log(`Thank you for delivering order ${data.payload.orderId}!`);
-
   }
-})
+}
 
 function createOrder() {
   let storeName = process.env.STORE;

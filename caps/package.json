@@ -16,6 +16,7 @@
     "faker": "^4.1.0"
   },
   "devDependencies": {
+    "cf-supergoose": "^1.0.2",
     "jest": "^26.1.0"
   }
 }
