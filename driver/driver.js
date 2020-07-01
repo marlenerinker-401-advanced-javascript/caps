@@ -5,7 +5,7 @@ const Client = new net.Socket();
 
 Client.connect(3000, 'localhost', () => {
   console.log('connected to server');
-});
+});// export this and run from an index
 
 
 Client.on('data', checkEvent);
