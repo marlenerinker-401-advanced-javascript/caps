@@ -33,7 +33,7 @@ function handleData(buffer) {
       socketPool[socket].write(JSON.stringify(data));
     }
   }
-  return data;//needed for testing
+  // return data;//needed for testing
 
 }
 
