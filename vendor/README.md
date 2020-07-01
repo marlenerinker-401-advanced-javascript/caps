@@ -1,34 +1,22 @@
-# caps
+# caps - vendor
 
-This project contains a system that emulates a real world supply chain.
+This represents the vendor application.
 
 
 ### Author: Marlene Rinker
 
-- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/caps/pull/1)
-<!-- - [Tests Report](https://github.com/marlenerinker-401-advanced-javascript/authenticated-api-server/actions)
-- [Swagger Hub](https://app.swaggerhub.com/apis/marlene-rinker/auth-api-server/0.1)
-- [Heroku deployment](https://auth-api-server-mr401.herokuapp.com/) -->
 
 
 
 ### Setup
 
 #### `.env` requirements
-<!-- PORT= `<port>` (will default to 3000 if you don't specify here)
-
-MONGODB_ATLAS_URI = `<route to mongo>`
-
-SECRET = `<secret-string>`
-
-TOKEN_EXPIRATION = `<when token should expire, for example: 1d>` -->
+STORE = Happy Little Store
 
 #### Packages to Install
 (see package.json)
 
 dotenv
-
-express
 
 faker
 
@@ -43,8 +31,8 @@ jest
 
 
 #### Running the app
-node caps.js 
-nodemon caps.js
+node vendor.js 
+nodemon vendor.js
 
 
 #### Tests
