@@ -15,6 +15,7 @@ function checkEvent(buffer) {
   if(data.event === 'package-ready') {
     handlePickup(data);
   }
+  return data;//need for testing
 }
 
 
@@ -29,3 +30,4 @@ function handlePickup(data) {
   
 }
 
+module.exports = checkEvent;

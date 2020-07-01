@@ -1,26 +1,29 @@
 'use strict';
 
-const startOrders = require('../lib/vendor.js');
-const events = require('../../lib/events.js');
 
 
 require('dotenv').config();
+const handleData = require('../caps.js');
+jest.spyOn(global.console, 'log');
 
 
-require('../lib/driver.js');
-require('../lib/vendor.js');
-require('../caps.js');
+describe('testing ordering system', () => {
+  
+  it('should log when data includes event and payload', async(done) => {
+    let buffer = JSON.stringify({event: 'package-ready', payload: {store: 'Test Store', orderId: '1234', customer: 'Test Customer', address: '123 Main Street, AnyCity, AnyState, 12345'}})
+    console.log(buffer); 
+    // const dataHandled = await handleData(buffer)
+    return await handleData(buffer)
+    .then (results => {
+      expect(results).toEqual({event: 'package-ready', payload: {store: 'Test Store', orderId: '1234', customer: 'Test Customer', address: '123 Main Street, AnyCity, AnyState, 12345'}});
+       done();
 
-//need to add tests
-
-// describe('testing ordering system', () => {
-
-//   it('should log when order is placed', (done) => {
-//     startOrders()
-//     .then(results => {
-//       setTimeout(console.log(results), 10000)
-//       done();
-//     })
-//     .catch(err => console.log(err));
-//     });
-//   });
+    })
+    // await console.log('this is the log: ', handleData(buffer))
+    // expect(console.log).toContain()
+    // .then(results => {
+    //  expect(console.log).toHaveBeenCalled()
+    // })
+    .catch(err => console.log(err));
+    });
+  });
