@@ -1,7 +1,7 @@
 'use strict';
 
 const startOrders = require('../lib/vendor.js');
-const events = require('../lib/events.js');
+const events = require('../../lib/events.js');
 
 
 require('dotenv').config();
