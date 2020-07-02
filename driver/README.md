@@ -19,6 +19,8 @@ dotenv
 
 faker
 
+socket.io-client
+
 
 
 For testing:

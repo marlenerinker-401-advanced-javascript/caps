@@ -1,53 +1,58 @@
 'use strict';
 
-const net = require('net');
+
+const socketIO = require('socket.io');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
-const server = net.createServer();
-
-const socketPool = {};
+const io = socketIO(PORT);
 
 
-server.on('connection', (socket) => {
-  const id = Math.floor(Math.random() * 10000000);
-  socketPool[id] = socket;
-  console.log('Connection established at ' + id);
-  socket.on('data', handleData);
+io.on('connection', (socket) => {
+  console.log('someone connected to the server');
+
   socket.on('error', (error) => console.log(error));
-  socket.on('end', () => { delete socketPool[id] });
 })
 
+let caps = io.of('/caps');
+caps.on('connection', (socket) => {
+  console.log('someone connected to the caps namespace');
+  
+  socket.on('join', room => {
+    console.log('someone joined room: ', room);
+    socket.join(room);
+  })
 
+  socket.on('pickup', handlePickup);
 
-server.on('error', (error => {
-  console.log('SERVER ERROR found: ', error);
-}))
+  socket.on('in-transit', handleInTransit);
 
+  socket.on('delivered', handleDelivered);
+})
 
-function handleData(buffer) {
-  let data = JSON.parse(buffer.toString());
-  if (data.event && data.payload) {
-    logger(data);
-    for (let socket in socketPool) {
-      socketPool[socket].write(JSON.stringify(data));
-    }
-  }
-  // return data;//needed for testing
-
-}
-
-function logger(data) {
+function handlePickup(payload) {
   let time = new Date();
-  let event = data.event;
-  let payload = data.payload;
-  console.log({ event: event, time, payload });
+  console.log({ event: 'Ready for Pickup', time, payload });
+  caps.emit('ready-for-pickup', payload);
+}
+
+function handleInTransit(payload) {
+  let time = new Date();
+  console.log({ event: 'In-transit', time, payload });
+  caps.to(payload.store).emit('package-in-transit', payload);
+}
+
+function handleDelivered(payload) {
+  let time = new Date();
+  console.log({ event: 'Delivered', time, payload });
+  caps.to(payload.store).emit('package-delivered', payload);
 }
 
 
 
-server.listen(PORT, () => {
-  console.log('Server is up on ' + PORT);
-})
 
-module.exports = handleData;
+module.exports = {
+  handlePickup,
+  handleInTransit,
+  handleDelivered
+}

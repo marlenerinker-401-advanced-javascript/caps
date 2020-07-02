@@ -5,7 +5,7 @@ This project contains a system that emulates a real world supply chain.
 
 ### Author: Marlene Rinker
 
-- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/caps/pull/2)
+- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/caps/pull/4)
 <!-- - [Tests Report](https://github.com/marlenerinker-401-advanced-javascript/authenticated-api-server/actions)
 - [Swagger Hub](https://app.swaggerhub.com/apis/marlene-rinker/auth-api-server/0.1)
 - [Heroku deployment](https://auth-api-server-mr401.herokuapp.com/) -->
