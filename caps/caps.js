@@ -1,10 +1,12 @@
 'use strict';
 
+
 const socketIO = require('socket.io');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 const io = socketIO(PORT);
+
 
 io.on('connection', (socket) => {
   console.log('someone connected to the server');
@@ -46,24 +48,11 @@ function handleDelivered(payload) {
   caps.to(payload.store).emit('package-delivered', payload);
 }
 
-// function handleData(buffer) {
-//   let data = JSON.parse(buffer.toString());
-//   if (data.event && data.payload) {
-//     logger(data);
-//     for (let socket in socketPool) {
-//       socketPool[socket].write(JSON.stringify(data));
-//     }
-//   }
-  
-
-// }
-
-// function logger(data) {
-//   let time = new Date();
-//   let event = data.event;
-//   let payload = data.payload;
-//   console.log({ event: event, time, payload });
-// }
 
 
-// module.exports = handleData;
+
+module.exports = {
+  handlePickup,
+  handleInTransit,
+  handleDelivered
+}

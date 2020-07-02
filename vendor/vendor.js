@@ -38,9 +38,4 @@ function confirmDelivery(payload){
   console.log(`Thank you for delivering order ${payload.orderId}!`);
 }
 
-// events.on('package-delivered', (payload) => {
-//   console.log(`Thank you for delivering order ${payload.orderId}!`)
-// })
 
-
-// module.exports = generateOrders;
