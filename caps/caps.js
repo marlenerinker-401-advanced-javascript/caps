@@ -21,46 +21,49 @@ caps.on('connection', (socket) => {
     socket.join(room);
   })
 
-  socket.on('pickup', (payload) => {
-    let time = new Date();
-    console.log({ event: 'Ready for Pickup', time, payload });
-    caps.emit('ready-for-pickup', payload);
-  });
+  socket.on('pickup', handlePickup);
 
+  socket.on('in-transit', handleInTransit);
 
-  socket.on('in-transit', (payload) => {
-    let time = new Date();
-    console.log({ event: 'In-transit', time, payload });
-    caps.to('Happy Little Store').emit('package-in-transit', payload);
-  });
-
-  socket.on('delivered', (payload) => {
-    let time = new Date();
-    console.log({ event: 'Delivered', time, payload });
-    caps.to('Happy Little Store').emit('package-delivered', payload);
-  });
+  socket.on('delivered', handleDelivered);
 })
 
+function handlePickup(payload) {
+  let time = new Date();
+  console.log({ event: 'Ready for Pickup', time, payload });
+  caps.emit('ready-for-pickup', payload);
+}
 
+function handleInTransit(payload) {
+  let time = new Date();
+  console.log({ event: 'In-transit', time, payload });
+  caps.to(payload.store).emit('package-in-transit', payload);
+}
 
-function handleData(buffer) {
-  let data = JSON.parse(buffer.toString());
-  if (data.event && data.payload) {
-    logger(data);
-    for (let socket in socketPool) {
-      socketPool[socket].write(JSON.stringify(data));
-    }
-  }
+function handleDelivered(payload) {
+  let time = new Date();
+  console.log({ event: 'Delivered', time, payload });
+  caps.to(payload.store).emit('package-delivered', payload);
+}
+
+// function handleData(buffer) {
+//   let data = JSON.parse(buffer.toString());
+//   if (data.event && data.payload) {
+//     logger(data);
+//     for (let socket in socketPool) {
+//       socketPool[socket].write(JSON.stringify(data));
+//     }
+//   }
   
 
-}
+// }
 
-function logger(data) {
-  let time = new Date();
-  let event = data.event;
-  let payload = data.payload;
-  console.log({ event: event, time, payload });
-}
+// function logger(data) {
+//   let time = new Date();
+//   let event = data.event;
+//   let payload = data.payload;
+//   console.log({ event: event, time, payload });
+// }
 
 
-module.exports = handleData;
+// module.exports = handleData;
