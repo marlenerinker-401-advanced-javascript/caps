@@ -1,33 +1,22 @@
 'use strict';
 
-const net = require('net');
-const Client = new net.Socket();
-
-Client.connect(3000, 'localhost', () => {
-  console.log('connected to server');
-});// export this and run from an index
+const io = require('socket.io-client');
+const socket = io.connect('http://localhost:3000/caps');
 
 
-Client.on('data', checkEvent);
-
-function checkEvent(buffer) {
-  let data = JSON.parse(buffer.toString());
-  if(data.event === 'package-ready') {
-    handlePickup(data);
-  }
-  return data;//need for testing
-}
+socket.on('ready-for-pickup', handlePickup);
 
 
-function handlePickup(data) {
+
+function handlePickup(payload) {
   setTimeout(function(){
-  console.log(`DRIVER: picked up ${data.payload.orderId}`);
-  Client.write(JSON.stringify({event: 'in-transit', payload: data.payload}));
+  console.log(`DRIVER: picked up ${payload.orderId}`);
+  socket.emit('in-transit', payload);
   }, 1000)
   setTimeout(function(){
-    Client.write(JSON.stringify({event: 'package-delivered', payload: data.payload}));
+    socket.emit('delivered', payload);
   }, 3000)
   
 }
 
-module.exports = checkEvent;
+

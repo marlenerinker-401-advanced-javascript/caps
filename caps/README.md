@@ -20,6 +20,8 @@ dotenv
 
 faker
 
+socket.io
+
 
 
 For testing:

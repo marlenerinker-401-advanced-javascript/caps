@@ -1,28 +1,46 @@
 'use strict';
 
-const net = require('net');
+const socketIO = require('socket.io');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
-const server = net.createServer();
+const io = socketIO(PORT);
 
-const socketPool = {};
+io.on('connection', (socket) => {
+  console.log('someone connected to the server');
 
-
-server.on('connection', (socket) => {
-  const id = Math.floor(Math.random() * 10000000);
-  socketPool[id] = socket;
-  console.log('Connection established at ' + id);
-  socket.on('data', handleData);
   socket.on('error', (error) => console.log(error));
-  socket.on('end', () => { delete socketPool[id] });
 })
 
+let caps = io.of('/caps');
+caps.on('connection', (socket) => {
+  console.log('someone connected to the caps namespace');
+  
+  socket.on('join', room => {
+    console.log('someone joined room: ', room);
+    socket.join(room);
+  })
+
+  socket.on('pickup', (payload) => {
+    let time = new Date();
+    console.log({ event: 'Ready for Pickup', time, payload });
+    caps.emit('ready-for-pickup', payload);
+  });
 
 
-server.on('error', (error => {
-  console.log('SERVER ERROR found: ', error);
-}))
+  socket.on('in-transit', (payload) => {
+    let time = new Date();
+    console.log({ event: 'In-transit', time, payload });
+    caps.to('Happy Little Store').emit('package-in-transit', payload);
+  });
+
+  socket.on('delivered', (payload) => {
+    let time = new Date();
+    console.log({ event: 'Delivered', time, payload });
+    caps.to('Happy Little Store').emit('package-delivered', payload);
+  });
+})
+
 
 
 function handleData(buffer) {
@@ -33,7 +51,7 @@ function handleData(buffer) {
       socketPool[socket].write(JSON.stringify(data));
     }
   }
-  // return data;//needed for testing
+  
 
 }
 
@@ -44,10 +62,5 @@ function logger(data) {
   console.log({ event: event, time, payload });
 }
 
-
-
-server.listen(PORT, () => {
-  console.log('Server is up on ' + PORT);
-})
 
 module.exports = handleData;
