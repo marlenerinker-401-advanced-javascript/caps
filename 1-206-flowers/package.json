@@ -1,11 +1,11 @@
 {
-  "name": "vendor",
+  "name": "1-206-flowers",
   "version": "1.0.0",
-  "description": "",
-  "main": "vendor.js",
+  "description": "This represents a retailer application.",
+  "main": "app.js",
   "scripts": {
-    "start": "node vendor.js",
-    "watch": "nodemon vendor.js",
+    "start": "node app.js",
+    "watch": "nodemon app.js",
     "test": "jest --verbose --coverage"
   },
   "keywords": [],
@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "faker": "^4.1.0",
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {

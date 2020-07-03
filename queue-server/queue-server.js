@@ -14,13 +14,13 @@ io.on('connection', (socket) => {
   socket.on('error', (error) => console.log(error));
 })
 
-// let messageQueue = [];
-// let clientNode = {
-//   clientId: null,
-//   event: {
-//     message: {}
-//   }
-// };
+let messageQueue = [];
+let clientNode = {
+  clientId: null,
+  event: {
+    message: {}
+  }
+};
 let queue = {
   greeting: {}
 }
@@ -40,11 +40,10 @@ caps.on('connection', (socket) => {
 
 })
 
+
 function handleSubscribed(room) {
   console.log('someone joined room: ', room);
-    socket.join(room);
-    // let client = clientNode.clientId = socket.id;
-    // messageQueue.push(client); 
+    this.join(room);
 }
 
 function handleReceived(payload) {

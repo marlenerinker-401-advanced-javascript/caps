@@ -1,6 +1,6 @@
-# caps - vendor
+# acme-widgets
 
-This represents the vendor application.
+This represents a retailer application.
 
 
 ### Author: Marlene Rinker
@@ -11,14 +11,11 @@ This represents the vendor application.
 ### Setup
 
 #### `.env` requirements
-STORE = Happy Little Store
 
 #### Packages to Install
 (see package.json)
 
 dotenv
-
-faker
 
 socket.io-client
 
@@ -33,8 +30,8 @@ jest
 
 
 #### Running the app
-node vendor.js 
-nodemon vendor.js
+node app.js 
+nodemon app.js
 
 
 #### Tests

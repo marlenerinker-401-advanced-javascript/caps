@@ -5,8 +5,7 @@ const io = require('socket.io-client');
 const socket = io.connect('http://localhost:3000/caps');
 
 
-
-socket.emit('subscribe', 'acme-widgets');
+socket.emit('subscribe', '1-206-flowers');
 socket.emit('getAll');
 socket.on('delivered', confirmDelivery);
 

@@ -1,16 +1,16 @@
-# caps - hub
+# 1-206-flowers
 
-This is the hub server.
+This represents a retailer application.
 
 
 ### Author: Marlene Rinker
 
 
 
+
 ### Setup
 
 #### `.env` requirements
-PORT= `<port>` (will default to 3000 if you don't specify here)
 
 
 #### Packages to Install
@@ -18,9 +18,7 @@ PORT= `<port>` (will default to 3000 if you don't specify here)
 
 dotenv
 
-faker
-
-socket.io
+socket.io-client
 
 
 
@@ -33,8 +31,8 @@ jest
 
 
 #### Running the app
-node caps.js 
-nodemon caps.js
+node app.js 
+nodemon app.js
 
 
 #### Tests
