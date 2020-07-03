@@ -1,6 +1,6 @@
-# caps - driver
+# caps - api
 
-This represents the driver application.
+This represents the caps api server.
 
 ### Author: Marlene Rinker
 
@@ -9,7 +9,7 @@ This represents the driver application.
 ### Setup
 
 #### `.env` requirements
-STORE = Happy Little Store
+PORT = port to use
 
 #### Packages to Install
 (see package.json)
@@ -17,9 +17,7 @@ STORE = Happy Little Store
 dotenv
 
 
-faker
-
-socket.io-client
+express
 
 
 
@@ -32,8 +30,8 @@ jest
 
 
 #### Running the app
-node driver.js 
-nodemon driver.js
+node api.js
+nodemon api.js
 
 
 #### Tests

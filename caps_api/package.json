@@ -1,0 +1,22 @@
+{
+  "name": "caps_api",
+  "version": "1.0.0",
+  "description": "This represents the caps api server.",
+  "main": "caps-api.js",
+  "scripts": {
+    "start": "node caps-api.js",
+    "watch": "nodemon caps-api.js",
+    "test": "jest --verbose --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
+}
