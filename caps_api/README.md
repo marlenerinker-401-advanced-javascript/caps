@@ -1,26 +1,23 @@
-# caps - vendor
+# caps - api
 
-This represents the vendor application.
-
+This represents the caps api server.
 
 ### Author: Marlene Rinker
-
 
 
 
 ### Setup
 
 #### `.env` requirements
-STORE = Happy Little Store
+PORT = port to use
 
 #### Packages to Install
 (see package.json)
 
 dotenv
 
-faker
 
-socket.io-client
+express
 
 
 
@@ -33,8 +30,8 @@ jest
 
 
 #### Running the app
-node vendor.js 
-nodemon vendor.js
+node api.js
+nodemon api.js
 
 
 #### Tests

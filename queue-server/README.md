@@ -1,6 +1,6 @@
-# caps - driver
+# queue-server
 
-This represents the driver application.
+This represents the message queue server.
 
 ### Author: Marlene Rinker
 
@@ -9,17 +9,14 @@ This represents the driver application.
 ### Setup
 
 #### `.env` requirements
-STORE = Happy Little Store
+PORT = port number
 
 #### Packages to Install
 (see package.json)
 
 dotenv
 
-
-faker
-
-socket.io-client
+socket.io
 
 
 
