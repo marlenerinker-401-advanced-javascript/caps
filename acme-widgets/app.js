@@ -14,3 +14,5 @@ queue.trigger('getAll', queue);
 function confirmDelivery(payload){
   console.log('message received', payload);
 }
+
+module.exports = confirmDelivery;

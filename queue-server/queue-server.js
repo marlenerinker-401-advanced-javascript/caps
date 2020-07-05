@@ -14,12 +14,9 @@ io.on('connection', (socket) => {
   socket.on('error', (error) => console.log(error));
 })
 
-//this will hold delivery event messages
+
 let deliveryEventMessageQueue = [];
 
-let queue = {
-  greeting: {}
-};
 
 
 let caps = io.of('/caps');
@@ -37,7 +34,7 @@ caps.on('connection', (socket) => {
 
 })
 
-//this function should allow someone to join a room and push the queue object into the message queue for the specified event type; it should check to see if the queue object already exists before pushing it into the message queue
+
 function handleSubscribed(client) {
   let room = client.clientId;
   console.log('someone joined room: ', room);
@@ -59,8 +56,6 @@ function handleReceived(payload) {
   })
 }
 
-
-
 function handleGetAll(payload) {
   deliveryEventMessageQueue.forEach(obj => {
     if(obj.clientId === payload.clientId){
@@ -70,7 +65,6 @@ function handleGetAll(payload) {
   }
   })
 }
-
 
 function handleDelivered(payload) {
   let id = Math.floor(Math.random() * 100000000).toString();
