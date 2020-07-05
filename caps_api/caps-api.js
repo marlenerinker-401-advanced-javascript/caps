@@ -19,7 +19,6 @@ function deliveryMessage(request, response) {
     retailer: request.params.retailer,
     code: request.params.code
   };
-  // console.log(object);
   response.send('delivering message');
   socket.emit('delivered', object);
 }

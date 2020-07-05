@@ -14,16 +14,10 @@ io.on('connection', (socket) => {
   socket.on('error', (error) => console.log(error));
 })
 
-let messageQueue = [];
-let clientNode = {
-  clientId: null,
-  event: {
-    message: {}
-  }
-};
-let queue = {
-  greeting: {}
-}
+
+let deliveryEventMessageQueue = [];
+
+
 
 let caps = io.of('/caps');
 caps.on('connection', (socket) => {
@@ -41,24 +35,55 @@ caps.on('connection', (socket) => {
 })
 
 
-function handleSubscribed(room) {
+function handleSubscribed(client) {
+  let room = client.clientId;
   console.log('someone joined room: ', room);
     this.join(room);
+    let check = checkQueue(deliveryEventMessageQueue, client);
+    if (!check) {
+      deliveryEventMessageQueue.push(client);
+    }
+    console.log(deliveryEventMessageQueue);
 }
 
 function handleReceived(payload) {
-  delete queue.greeting[payload.id]
-} 
+  deliveryEventMessageQueue.forEach(obj => {
+    Object.keys(obj.messages).forEach(id => {
+      if(id === payload.id) {
+        delete obj.messages[id];
+      }
+    })
+  })
+}
 
-function handleGetAll() {
-  Object.keys(queue.greeting).forEach(id => {
-    caps.emit('delivered', { id, payload: queue.greeting[id]});
+function handleGetAll(payload) {
+  deliveryEventMessageQueue.forEach(obj => {
+    if(obj.clientId === payload.clientId){
+      Object.keys(obj.messages).forEach(id => {
+      caps.to(obj.clientId).emit('delivered', { id, message: obj.messages[id]});//obj.clientId is the room name
+    })
+  }
   })
 }
 
 function handleDelivered(payload) {
-  let id = Math.floor(Math.random() * 100000000);
-    queue.greeting[id] = payload;
-    console.log(queue);
-    caps.emit('delivered', { id, payload });
+  let id = Math.floor(Math.random() * 100000000).toString();
+    deliveryEventMessageQueue.forEach(obj => {
+      if(obj.clientId === payload.retailer){
+      obj.messages[id] = payload;      
+      caps.to(obj.clientId).emit('delivered', { id, message: obj.messages[id]});
+      }
+    })
+    console.log(deliveryEventMessageQueue);
+}
+
+function checkQueue(queue, object) {
+  let testArray = Object.values(queue);
+  let result = false;
+  testArray.forEach(obj => {
+    if(obj.clientId === object.clientId)
+    return result = true;
+  })
+  return result;
+
 }

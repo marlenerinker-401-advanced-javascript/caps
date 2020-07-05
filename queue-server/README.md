@@ -29,8 +29,8 @@ jest
 
 
 #### Running the app
-node driver.js 
-nodemon driver.js
+node queue-server.js 
+nodemon queue-server.js
 
 
 #### Tests

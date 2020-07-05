@@ -1,19 +1,18 @@
 'use strict';
 
-require('dotenv').config();
-const io = require('socket.io-client');
-const socket = io.connect('http://localhost:3000/caps');
+
+const Queue = require('./lib/queue.js');
+const company = 'acme-widgets';
+const queue = new Queue(company);
 
 
 
-socket.emit('subscribe', 'acme-widgets');
-socket.emit('getAll');
-socket.on('delivered', confirmDelivery);
-
-
+queue.subscribe('delivered', confirmDelivery);
+queue.trigger('getAll', queue);
 
 
 function confirmDelivery(payload){
   console.log('message received', payload);
-  socket.emit('received', payload)
 }
+
+module.exports = confirmDelivery;
