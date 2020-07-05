@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+
 const Queue = require('./lib/queue.js');
 const company = 'acme-widgets';
 const queue = new Queue(company);
