@@ -4,7 +4,7 @@
   "description": "This project contains a system that emulates a real world supply chain.",
   "main": "index.js",
   "dependencies": {
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   },
   "devDependencies": {
     "jest": "^26.1.0"
